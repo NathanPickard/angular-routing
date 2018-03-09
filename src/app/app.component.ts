@@ -7,20 +7,20 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent /*implements OnInit*/ {
 
-  products: any;
+  //   products: any;
 
-  constructor(private router: Router, private productServices: ProductServices) { }
+  //   constructor(private router: Router, private productServices: ProductServices) { }
 
-  ngOnInit() {
-    this.products = this.productServices.productList();
-  }
+  //   ngOnInit() {
+  //     this.products = this.productServices.productList();
+  //   }
 
-  show(id) {
-    this.router.navigate(['details', id, 'Fred', { foo: 'foo2', me: 'Nate' }])
+  //   show(id) {
+  //     this.router.navigate(['details', id, 'Fred', { foo: 'foo2', me: 'Nate' }])
 
-  }
+  //   }
 
 
 }
