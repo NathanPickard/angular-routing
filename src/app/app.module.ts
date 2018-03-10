@@ -27,9 +27,21 @@ import { ProductsComponent } from './Products/products.component';
 
 const appRoutes: Routes = [
   { path: '', component: InstructionsComponent },
-  { path: 'details/:id/:name', component: DetailsComponent }
+  {
+    path: 'login', component: LoginComponent, children: [
+      { path: '', component: LoginUserComponent },
+      { path: 'login', component: LoginUserComponent },
+      { path: 'forgot', component: ResetPasswordComponent }
+    ]
+  },
+  {
+    path: 'products', component: ProductsComponent, children: [
+      { path: 'details/:id', component: DetailsComponent }
+    ]
+  },
+  { path: 'admin', component: AdminComponent },
+  // { path: 'details/:id/:name', component: DetailsComponent }
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
-  // { path: 'login', component: LoginComponent },
   // { path: 'reset-password', component: ResetComponent },
   // { path: '**', component: NotFoundComponent }
 ];
@@ -37,10 +49,21 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    AdminComponent,
+    ItemListComponent,
+    ItemDetailsComponent,
+    ItemEditComponent,
+    AddUserComponent,
+    EditUserComponent,
+    PermissionsComponent,
+    ProductsComponent,
+    LoginUserComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent,
     DetailsComponent,
     InstructionsComponent,
     OutletComponent,
-    // LoginComponent,
+    LoginComponent,
     ResetComponent,
     NotFoundComponent
   ],
