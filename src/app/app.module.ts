@@ -24,6 +24,8 @@ import { ResetPasswordComponent } from './login/reset-password/reset-password.co
 import { ForgotPasswordComponent } from './login/forgot-password/forgot-password.component';
 import { AdminComponent } from './admin/admin.component';
 import { ProductsComponent } from './Products/products.component';
+import { LoggedInGuard } from './services/logged-in.guard';
+import { PerSavedGuardGuard } from './services/per-saved-guard.guard';
 
 const appRoutes: Routes = [
   { path: '', component: InstructionsComponent },
@@ -36,10 +38,22 @@ const appRoutes: Routes = [
   },
   {
     path: 'products', component: ProductsComponent, children: [
+      { path: '', component: InstructionsComponent },
       { path: 'details/:id', component: DetailsComponent }
     ]
   },
-  { path: 'admin', component: AdminComponent },
+  {
+    path: 'admin', component: AdminComponent, canActivate: [
+      LoggedInGuard
+
+    ],
+    children: [
+      { path: '', component: UsersComponent },
+      { path: 'user-list', component: UsersComponent },
+      { path: 'add', component: AddUserComponent },
+      { path: 'permissions', component: PermissionsComponent, canDeactivate: [PerSavedGuardGuard] },
+    ]
+  },
   // { path: 'details/:id/:name', component: DetailsComponent }
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: 'reset-password', component: ResetComponent },
@@ -65,14 +79,15 @@ const appRoutes: Routes = [
     OutletComponent,
     LoginComponent,
     ResetComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [ProductServices],
+  providers: [ProductServices, LoggedInGuard, PerSavedGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
