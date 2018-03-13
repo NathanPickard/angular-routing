@@ -26,6 +26,9 @@ import { AdminComponent } from './admin/admin.component';
 import { ProductsComponent } from './Products/products.component';
 import { LoggedInGuard } from './services/logged-in.guard';
 import { PerSavedGuardGuard } from './services/per-saved-guard.guard';
+import { ProductsModule } from './Products/products.module';
+import { AdminModule } from './admin/admin.module';
+import { SharedModule } from './shared/shared.module';
 
 const appRoutes: Routes = [
   { path: '', component: InstructionsComponent },
@@ -36,24 +39,9 @@ const appRoutes: Routes = [
       { path: 'forgot', component: ResetPasswordComponent }
     ]
   },
-  {
-    path: 'products', component: ProductsComponent, children: [
-      { path: '', component: InstructionsComponent },
-      { path: 'details/:id', component: DetailsComponent }
-    ]
-  },
-  {
-    path: 'admin', component: AdminComponent, canActivate: [
-      LoggedInGuard
+  { path: 'admin', loadChildren: 'app/admin/admin.module' },
+  { path: 'products', loadChildren: 'app/Products/products.module#ProductsModule' }
 
-    ],
-    children: [
-      { path: '', component: UsersComponent },
-      { path: 'user-list', component: UsersComponent },
-      { path: 'add', component: AddUserComponent },
-      { path: 'permissions', component: PermissionsComponent, canDeactivate: [PerSavedGuardGuard] },
-    ]
-  },
   // { path: 'details/:id/:name', component: DetailsComponent }
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: 'reset-password', component: ResetComponent },
@@ -63,31 +51,24 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AdminComponent,
     ItemListComponent,
     ItemDetailsComponent,
     ItemEditComponent,
-    AddUserComponent,
-    EditUserComponent,
-    PermissionsComponent,
-    ProductsComponent,
     LoginUserComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
-    DetailsComponent,
-    InstructionsComponent,
     OutletComponent,
     LoginComponent,
     ResetComponent,
-    NotFoundComponent,
-    UsersComponent
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    SharedModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [ProductServices, LoggedInGuard, PerSavedGuardGuard],
+  providers: [ProductServices],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
