@@ -39,7 +39,7 @@ const appRoutes: Routes = [
       { path: 'forgot', component: ResetPasswordComponent }
     ]
   },
-  { path: 'admin', loadChildren: 'app/admin/admin.module' },
+  { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
   { path: 'products', loadChildren: 'app/Products/products.module#ProductsModule' }
 
   // { path: 'details/:id/:name', component: DetailsComponent }
